@@ -4,12 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
 import { selectUserName, selectUserEmail, selectUserPhoto, setUserLoginDetails } from "../features/user/userSlice";
+import { useEffect } from "react";
 
 const Header = (props) => {
     const dispatch = useDispatch()
     const history = useHistory ()
     const userName = useSelector(selectUserName)
     const userPhoto = useSelector(selectUserPhoto)
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                setUser (user)
+                history.push('/home')
+            }
+        })
+    }, [userName])
 
     const handleAuth = () => {
         signInWithPopup(auth, provider)
