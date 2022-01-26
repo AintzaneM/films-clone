@@ -1,6 +1,21 @@
 import styled from "styled-components";
+import {auth, provider} from '../firebase'
+import { signInWithPopup } from "firebase/auth";
 
 const Header = (props) => {
+    const handleAuth = () => {
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            console.log("result", result)
+        }).catch((error) => {
+            alert(error.message)
+        })
+    }
+   
+
+
+
+
     return (
         <Nav>
             <Logo>
@@ -33,7 +48,7 @@ const Header = (props) => {
                 </a>
                 
             </NavMenu>
-            <Login>Login</Login>
+            <Login onClick={handleAuth}>Login</Login>
         </Nav>
     )
 }
