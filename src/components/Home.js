@@ -23,7 +23,7 @@ const Home = (props) => {
   let trending = [];
 
   useEffect(() => {
-    console.log("start")
+    // console.log("start")
     onSnapshot(collection(db, "movies"),(snapshot) => {
       snapshot.docs.map((doc)=> {
         // console.log("fffff",recommends);
@@ -50,7 +50,7 @@ const Home = (props) => {
       setMovies({
         recommend: recommends,
         newDisney: newDisney,
-        original: originals,
+        originals: originals,
         trending: trending,
       })
     );
