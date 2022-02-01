@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider} from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore/lite'
+import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -14,10 +14,11 @@ const firebaseConfig = {
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
+const db = getFirestore();
+// console.log(db, "dbbbb")
 const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
 const storage = getStorage(firebaseApp);
 
-export { auth, provider, storage };
+export { auth, provider, storage, db };
 export default db;
