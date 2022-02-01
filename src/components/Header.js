@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {auth, provider} from '../firebase'
+import { auth, provider } from '../firebase'
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
@@ -8,102 +8,93 @@ import { useEffect } from "react";
 
 const Header = (props) => {
     const dispatch = useDispatch()
-    const history = useHistory ()
+    const history = useHistory()
     const userName = useSelector(selectUserName)
     const userPhoto = useSelector(selectUserPhoto)
-    
+
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                setUser (user)
+                setUser(user)
                 history.push('/home')
             }
         })
-    }, [userName])
+    }, [userName]);
 
     const handleAuth = () => {
-        if(!userName){
+        if (!userName) {
 
             signInWithPopup(auth, provider)
-            .then((result) => {
-                setUser(result.user)
-            }).catch((error) => {
-                alert(error.message)
-            });
-        }else if (userName) {
+                .then((result) => {
+                    setUser(result.user)
+                }).catch((error) => {
+                    alert(error.message)
+                });
+        } else if (userName) {
             auth.signOut()
-            .then(() => {
-                dispatch(setSignOutState())
-                history.push("/")
-            }).catch((error) => {
-                alert(error.message)
-            })
+                .then(() => {
+                    dispatch(setSignOutState())
+                    history.push("/")
+                }).catch((error) => {
+                    alert(error.message)
+                })
         }
-
     };
 
     const setUser = (user) => {
-        dispatch (
+        dispatch(
             setUserLoginDetails({
-                name:  user.displayName,
+                name: user.displayName,
                 email: user.email,
-                photo:user.photoURL,
+                photo: user.photoURL,
             })
         )
-    }
-   
-
-
-
-
+    };
     return (
         <Nav>
             <Logo>
-                <img src="/images/logo.svg" alt=""/>
+                <img src="/images/logo.svg" alt="" />
             </Logo>
-            {!userName 
-            ? (<Login onClick={handleAuth}>Login</Login>)
-            : (<>             
-            <NavMenu>
-                <a href= "/home">
-                    <img src="/images/home-icon.svg" alt=""/>
-                    <span>HOME</span>
-                </a>
-                <a>
-                    <img src="/images/search-icon.svg" alt=""/>
-                    <span>SEARCH</span>
-                </a>
-                <a>
-                    <img src="/images/watchlist-icon.svg" alt=""/>
-                    <span>WATCHLIST</span>
-                </a>
-                <a>
-                    <img src="/images/original-icon.svg" alt=""/>
-                    <span>ORIGINALS</span>
-                </a>
-                <a>
-                    <img src="/images/movie-icon.svg" alt=""/>
-                    <span>MOVIES</span>
-                </a>
-                <a>
-                    <img src="/images/series-icon.svg" alt=""/>
-                    <span>SERIES</span>
-                </a>
-                
-            </NavMenu>
-            <SignOut>
-                <UserImg src= {userPhoto} alt={userName}/>
-                <DropDown>
-                    <span onClick={handleAuth}>Sign out</span>
-                </DropDown>
-
-            </SignOut>
-            
-            </>
-            )}
+            {!userName
+                ? (<Login onClick={handleAuth}>Login</Login>)
+                : (<>
+                    <NavMenu>
+                        <a href="/home">
+                            <img src="/images/home-icon.svg" alt="" />
+                            <span>HOME</span>
+                        </a>
+                        <a>
+                            <img src="/images/search-icon.svg" alt="" />
+                            <span>SEARCH</span>
+                        </a>
+                        <a>
+                            <img src="/images/watchlist-icon.svg" alt="" />
+                            <span>WATCHLIST</span>
+                        </a>
+                        <a>
+                            <img src="/images/original-icon.svg" alt="" />
+                            <span>ORIGINALS</span>
+                        </a>
+                        <a>
+                            <img src="/images/movie-icon.svg" alt="" />
+                            <span>MOVIES</span>
+                        </a>
+                        <a>
+                            <img src="/images/series-icon.svg" alt="" />
+                            <span>SERIES</span>
+                        </a>
+                    </NavMenu>
+                    <SignOut>
+                        <UserImg src={userPhoto} alt={userName} />
+                        <DropDown>
+                            <span onClick={handleAuth}>Sign out</span>
+                        </DropDown>
+                    </SignOut>
+                </>
+                )}
         </Nav>
     )
-}
+};
 
 const Nav = styled.nav`
 position: fixed;
@@ -118,7 +109,7 @@ align-items: center;
 padding: 0 36px;
 letter-spacing: 16px;
 z-index: 3;
-`
+`;
 
 const Logo = styled.a`
 padding: 0;
@@ -131,18 +122,18 @@ img {
     displat:block;
     width: 100%;
 }
-`
+`;
 const NavMenu = styled.div`
-  align-items: center;
-  display: flex;
-  flex-flow: row nowrap;
-  height: 100%;
-  justify-content: flex-end;
-  margin: 0px;
-  padding: 0px;
-  position: relative;
-  margin-right: auto;
-  margin-left: 25px;
+align-items: center;
+display: flex;
+flex-flow: row nowrap;
+height: 100%;
+justify-content: flex-end;
+margin: 0px;
+padding: 0px;
+position: relative;
+margin-right: auto;
+margin-left: 25px;
 
   a {
     display: flex;
@@ -195,9 +186,9 @@ const NavMenu = styled.div`
 // @media (max-width: 768px) {
 //     display: none
 // }
-`
+`;
 
-const Login = styled.a `
+const Login = styled.a`
 background-color: rgb(0, 0, 0 0.6);
 padding: 8px 16px;
 text-transform: uppercase;
@@ -214,10 +205,7 @@ transition: all .2s ease 0s;
 `
 const UserImg = styled.img`
 height: 100%;
-
-`
-
-
+`;
 
 const DropDown = styled.div`
 position:absolute;
@@ -232,10 +220,7 @@ font-size: 14px;
 letter-spacing: 3px;
 width: 100px;
 opacity: 0;
-
-
-`
-
+`;
 
 const SignOut = styled.div`
 position:relative;
@@ -259,12 +244,7 @@ ${UserImg} {
 
     }
 }
-
-
-
-`
-
-
+`;
 
 
 export default Header;

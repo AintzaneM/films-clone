@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectNewDisney } from "../features/movie/movieSlice";
 
@@ -29,10 +29,7 @@ const NewDisney = (props) => {
 
 const Container = styled.div`
 padding: 0 0 26px;
-
-
-
-`
+`;
 
 const Content = styled.div`
 display: grid;
@@ -44,7 +41,7 @@ grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-`
+`;
 
 const Wrap = styled.div`
 padding-top: 56.25;
@@ -74,11 +71,9 @@ img {
             transform: scale(1.05);
             border-color: rgba(249, 249, 249, 0.8);
         }
-     
     }
-
 }
-`
+`;
 export default NewDisney;
 
 

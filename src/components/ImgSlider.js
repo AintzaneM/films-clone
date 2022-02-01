@@ -2,7 +2,6 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-// import slider from "react-slick/lib/slider";
 
 
 
@@ -15,34 +14,31 @@ const ImgSlider = (props) => {
         slidesToScroll: 1,
         autoplay: true,
     }
-
     return (
-        
-            <Carousel {...settings}>
-                <Wrap>
-                    <a>
-                        <img src = '/images/slider-badging.jpg' alt = ""/>
-                    </a>
-                </Wrap>
-                <Wrap>
-                    <a>
-                        <img src = '/images/slider-badag.jpg' alt = ""/>
-                    </a>
-                </Wrap>
-                <Wrap>
-                    <a>
-                        <img src = '/images/slider-scale.jpg' alt = ""/>
-                    </a>
-                </Wrap>
-                <Wrap>
-                    <a>
-                        <img src = '/images/slider-scales.jpg' alt = ""/>
-                    </a>
-                </Wrap>
-            </Carousel>
-        
+        <Carousel {...settings}>
+            <Wrap>
+                <a>
+                    <img src='/images/slider-badging.jpg' alt="" />
+                </a>
+            </Wrap>
+            <Wrap>
+                <a>
+                    <img src='/images/slider-badag.jpg' alt="" />
+                </a>
+            </Wrap>
+            <Wrap>
+                <a>
+                    <img src='/images/slider-scale.jpg' alt="" />
+                </a>
+            </Wrap>
+            <Wrap>
+                <a>
+                    <img src='/images/slider-scales.jpg' alt="" />
+                </a>
+            </Wrap>
+        </Carousel>
     )
-}
+};
 
 const Carousel = styled(Slider)`
 margin-top: 20px;
@@ -57,28 +53,25 @@ margin-top: 20px;
         transition: opacity 0.2s ease 0s;
     }
 }
-
 ul li button {
     &:before {
         font-size: 10px;
         color: rgb(150, 158, 171)
     }
 }
-
 li.slick-active button:before {
     color: white;
 }
 .slick-list {
     overflow: initial;
 }
-
 .slick-prev {
     left: -75px;
 }
 .slick-next {
     right: -75px;
 }
-`
+`;
 
 const Wrap = styled.div`
 border-radius: 4px;
@@ -104,8 +97,7 @@ a {
         transition-duration: 300ms;
     }
 }
-
-`
+`;
 
 
 export default ImgSlider;

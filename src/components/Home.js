@@ -8,10 +8,10 @@ import Trending from "./Trending";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import db from "../firebase";
-import {doc, onSnapshot, collection} from "firebase/firestore"
+import { onSnapshot, collection } from "firebase/firestore"
 import { setMovies } from "../features/movie/movieSlice";
 import { selectUserName } from "../features/user/userSlice";
-import { map } from "@firebase/util";
+
 
 
 const Home = (props) => {
@@ -24,8 +24,8 @@ const Home = (props) => {
 
   useEffect(() => {
     // console.log("start")
-    onSnapshot(collection(db, "movies"),(snapshot) => {
-      snapshot.docs.map((doc)=> {
+    onSnapshot(collection(db, "movies"), (snapshot) => {
+      snapshot.docs.map((doc) => {
         // console.log("fffff",recommends);
         switch (doc.data().type) {
           case "recommend":
@@ -45,28 +45,28 @@ const Home = (props) => {
             break;
         }
       })
-    
-    dispatch(
-      setMovies({
-        recommend: recommends,
-        newDisney: newDisney,
-        originals: originals,
-        trending: trending,
-      })
-    );
-  });
-}, [userName]);
 
-    return (
-        <Container>
-            <ImgSlider/>
-            <Viewers/>
-            <Recommends/>
-            <NewDisney/>
-            <Originals/>
-            <Trending/>
-        </Container>
-    );
+      dispatch(
+        setMovies({
+          recommend: recommends,
+          newDisney: newDisney,
+          originals: originals,
+          trending: trending,
+        })
+      );
+    });
+  }, [userName]);
+
+  return (
+    <Container>
+      <ImgSlider />
+      <Viewers />
+      <Recommends />
+      <NewDisney />
+      <Originals />
+      <Trending />
+    </Container>
+  );
 };
 
 
