@@ -1,45 +1,61 @@
 import styled from "styled-components";
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import db from "../firebase";
+import { doc, onSnapshot } from "firebase/firestore"
 
 
 const Detail = (props) => {
+    const { id } = useParams();
+    const [detailData, setDetailData] = useState({})
+    useEffect(() => {
+        const docRef = doc(db, "movies", id)
+        console.log(docRef)
+        onSnapshot(docRef, (doc) => {
+            if (doc.exists()) {
+                setDetailData(doc.data());
+            } else {
+                console.log("no such document in firebase")
+            }
+        })
+    }, [id]);
     return (
         <Container>
             <Background>
-                <img src="/images/jungle.jpeg" alt=""></img>
+                <img src={detailData.backgroundImg} alt={detailData.title}></img>
             </Background>
             <ImageTitle>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/97BB36F8B9FC053F561894DD7B1C42C4FD20E63560F481CBCB3B9D3600CFCA3B/scale?width=1440&aspectRatio=1.78" alt=""></img>
+                <img src={detailData.titleImg} alt={detailData.title}></img>
             </ImageTitle>
             <ContentMeta>
-            <Controls>
-                <Player>
-                    <img src ="/images/play-icon-black.png" alt=""></img>
-                    <span>Play</span>
-                </Player>
-                <Trailer>
-                    <img src ="/images/play-icon-white.png" alt=""/>
-                    <span>Trailer</span>
-                </Trailer>
-                <AddList>
-                    <span/>
-                    <span/>
-                </AddList>
-                <GroupWatch>
-                    <div>
-                        <img src="/images/group-icon.png" alt=""></img>
-                    </div>
-                </GroupWatch>
-            </Controls>
-            <Subtitles>
-                Subtitle
-            </Subtitles>
-            <Description>
-                description
-            </Description>
+                <Controls>
+                    <Player>
+                        <img src="/images/play-icon-black.png" alt=""></img>
+                        <span>Play</span>
+                    </Player>
+                    <Trailer>
+                        <img src="/images/play-icon-white.png" alt="" />
+                        <span>Trailer</span>
+                    </Trailer>
+                    <AddList>
+                        <span />
+                        <span />
+                    </AddList>
+                    <GroupWatch>
+                        <div>
+                            <img src="/images/group-icon.png" alt=""></img>
+                        </div>
+                    </GroupWatch>
+                </Controls>
+                <Subtitles>
+                    {detailData.subTitle}
+                </Subtitles>
+                <Description>
+                    {detailData.description}
+                </Description>
             </ContentMeta>
         </Container>
-        )
+    )
 };
 
 
@@ -65,12 +81,10 @@ z-index: -1;
 img {
     width: 100vw;
     height: 100vh;
-
     @media(max-width: 768px){
         width: initial;
     }
 }
-
 `;
 
 const ImageTitle = styled.div`
@@ -100,7 +114,7 @@ display: flex;
 flex-flow: row nowrap;
 margin: 24px 0px;
 min-height: 56px;
-` ;
+`;
 
 const Player = styled.button`
 font-size: 15px;
@@ -126,7 +140,6 @@ img{
 &:hover {
     background: rgb(198, 198, 198)
 }
-
 @media(max-width: 768px) {
     height: 45px;
     padding: 0px 12px;
@@ -136,16 +149,14 @@ img{
     img{
         width: 25px;
     }
-
 }
-`
+`;
 
 
 const Trailer = styled(Player)`
 background: rgba(0, 0, 0, 0.3);
 border: 1px solid rgb(249, 249, 249);
-color: rgb (249, 249, 249);
-
+color: rgb(249, 249, 249);
 `;
 
 const AddList = styled.div`
@@ -174,7 +185,6 @@ span {
         width: 2px;
     }
 }
-
 `;
 
 const GroupWatch = styled.div`
